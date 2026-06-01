@@ -102,21 +102,9 @@ export default function Layout({ children }) {
           ))}
         </nav>
 
-        {/* Bottom: AI Badge */}
+        {/* Bottom: Profile */}
         <div className="p-4 border-t border-white/5">
-          <div className="bg-neutral-900/50 rounded-lg p-3 border border-white/10">
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-              <span className="text-[10px] uppercase tracking-widest text-white font-body">
-                AI Active
-              </span>
-            </div>
-            <p className="text-xs text-neutral-500 font-body">
-              GPT-4o analyzing your marketing data in real-time
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3 mt-4">
+          <div className="flex items-center gap-3 mt-2">
             <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0">
               <span className="text-xs font-bold text-white font-heading tracking-tight">RS</span>
             </div>

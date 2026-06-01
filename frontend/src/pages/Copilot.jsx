@@ -3,8 +3,7 @@ import axios from "axios";
 import { Send, Sparkles, RefreshCw } from "lucide-react";
 import { generateAiChatCompletion, getOpenAiKey } from "../lib/openai";
 
-const AI_AVATAR =
-  "https://static.prod-images.emergentagent.com/jobs/bacfb64e-ff2d-4fa1-90e9-6e28912ba76e/images/3a495445b560363815d16ecaae7dd1be5cff8c811ab98aefbbc75f0b863c9532.png";
+const AI_AVATAR = "/projectlogo.png";
 
 const SUGGESTED = [
   "Why did our ROAS decline over the last 6 months?",
@@ -63,7 +62,7 @@ export default function Copilot() {
     } catch (err) {
       const errorText = err.message === "API_KEY_MISSING"
         ? "Please make sure your OpenAI API Key is correctly configured in your frontend's .env file (REACT_APP_OPENAI_API_KEY) and that you have restarted your development server."
-        : "I encountered an issue processing your request. Please check your API key and network connection and try again.";
+        : "I encountered an issue processing your request. Please check network connection and try again.";
       setMessages((prev) => [
         ...prev,
         {
