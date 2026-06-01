@@ -57,22 +57,18 @@ export default function Layout({ children }) {
         } lg:translate-x-0`}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center px-5 border-b border-white/5">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-[#00FF9C]/10 border border-[#00FF9C]/30 rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(0,255,156,0.1)]">
-              <TrendingUp className="w-4 h-4 text-[#00FF9C]" />
+        <div className="h-16 flex items-center px-5 border-b border-white/5 gap-3">
+          <img src="/projectlogo.png" alt="Project" className="h-10 object-contain" />
+          <div className="leading-tight">
+            <div className="text-[9px] uppercase tracking-[0.2em] text-neutral-500 font-body">
+              Math of
             </div>
-            <div className="leading-tight">
-              <div className="text-xs uppercase tracking-[0.15em] text-[#525C57] font-body">
-                Math of
-              </div>
-              <div className="text-sm font-bold text-white font-heading tracking-tight">
-                Marketing
-              </div>
+            <div className="text-xs font-bold text-white font-title tracking-wider">
+              MARKETING
             </div>
           </div>
           <button
-            className="ml-auto lg:hidden text-[#8B9A92] hover:text-white"
+            className="ml-auto lg:hidden text-neutral-400 hover:text-white"
             onClick={() => setSidebarOpen(false)}
             data-testid="sidebar-close-btn"
           >
@@ -83,7 +79,7 @@ export default function Layout({ children }) {
         {/* Nav */}
         <nav className="flex-1 py-5 space-y-0.5 overflow-y-auto">
           <div className="px-3 mb-3">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#525C57] font-body">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 font-body">
               Navigation
             </span>
           </div>
@@ -96,8 +92,8 @@ export default function Layout({ children }) {
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center gap-3 px-4 py-2.5 text-[#00FF9C] bg-gradient-to-r from-[#00FF9C]/10 to-transparent border-l-2 border-[#00FF9C] ml-3 mr-3 rounded-r-lg transition-all duration-200"
-                  : "flex items-center gap-3 px-4 py-2.5 text-[#8B9A92] hover:text-white hover:bg-white/5 ml-3 mr-3 rounded-lg transition-all duration-200"
+                  ? "flex items-center gap-3 px-4 py-2.5 text-white bg-gradient-to-r from-white/10 to-transparent border-l-2 border-white ml-3 mr-3 transition-all duration-200"
+                  : "flex items-center gap-3 px-4 py-2.5 text-neutral-400 hover:text-white hover:bg-white/5 ml-3 mr-3 transition-all duration-200"
               }
             >
               <item.icon className="w-4 h-4 flex-shrink-0" />
@@ -108,28 +104,28 @@ export default function Layout({ children }) {
 
         {/* Bottom: AI Badge */}
         <div className="p-4 border-t border-white/5">
-          <div className="bg-[#0A0D0B] rounded-xl p-3 border border-[#00FF9C]/10">
+          <div className="bg-neutral-900/50 rounded-lg p-3 border border-white/10">
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-1.5 h-1.5 bg-[#00FF9C] rounded-full animate-pulse" />
-              <span className="text-[10px] uppercase tracking-widest text-[#00FF9C] font-body">
+              <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+              <span className="text-[10px] uppercase tracking-widest text-white font-body">
                 AI Active
               </span>
             </div>
-            <p className="text-xs text-[#525C57] font-body">
+            <p className="text-xs text-neutral-500 font-body">
               GPT-4o analyzing your marketing data in real-time
             </p>
           </div>
 
           <div className="flex items-center gap-3 mt-4">
-            <div className="w-8 h-8 rounded-full bg-[#00FF9C]/15 border border-[#00FF9C]/30 flex items-center justify-center flex-shrink-0">
-              <span className="text-xs font-bold text-[#00FF9C] font-heading tracking-tight">RS</span>
+            <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0">
+              <span className="text-xs font-bold text-white font-heading tracking-tight">RS</span>
             </div>
             <div>
               <div className="text-sm text-white font-medium font-body">
                 Rasheed Sait
               </div>
-              <div className="text-xs text-[#525C57] font-body">
-                CMO, Project Worldwide
+              <div className="text-xs text-neutral-500 font-body">
+                CGO, Project Worldwide
               </div>
             </div>
           </div>
@@ -142,16 +138,15 @@ export default function Layout({ children }) {
         <header className="lg:hidden h-14 flex items-center px-4 border-b border-white/5 bg-[#050505] flex-shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="text-[#8B9A92] hover:text-white mr-3"
+            className="text-neutral-400 hover:text-white mr-3"
             data-testid="sidebar-open-btn"
           >
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-[#00FF9C]" />
-            <span className="text-sm font-bold text-white font-heading">
-              Math of{" "}
-              <span className="text-[#00FF9C]">Marketing</span>
+            <img src="/projectlogo.png" alt="Project" className="h-8 object-contain" />
+            <span className="text-sm font-bold text-white font-title tracking-wider">
+              MATH OF MARKETING
             </span>
           </div>
         </header>

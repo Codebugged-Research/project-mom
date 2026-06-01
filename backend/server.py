@@ -10,6 +10,7 @@ from pathlib import Path
 from pydantic import BaseModel
 from typing import Optional
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+from openai import OpenAI
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -168,76 +169,141 @@ async def get_chat_history(session_id: str):
     return messages
 
 
+FALLBACK_RECOMMENDATIONS = {
+    "generated_at": "2026-06-01T13:00:00Z",
+    "period": "June 2026",
+    "key_findings": [
+        {
+            "severity": "critical",
+            "finding": "ROAS declined 6 consecutive months: 2.04x → 1.82x",
+            "impact": "Revenue growth is not keeping pace with spend increases",
+            "channel": "All"
+        },
+        {
+            "severity": "opportunity",
+            "finding": "CAC improved 17% in 6 months ($600 → $499) — leads growing faster than spend",
+            "impact": "Lead generation efficiency gaining momentum — strong signal to invest further",
+            "channel": "All"
+        },
+        {
+            "severity": "high",
+            "finding": "Meta Ads: 30% of budget but worst ROAS at 1.66x — declining trend",
+            "impact": "~$28K/month in suboptimal spend vs alternative channels",
+            "channel": "Meta Ads"
+        },
+        {
+            "severity": "opportunity",
+            "finding": "Email delivers 5.67x ROAS — 3x above average — on just $12K/month",
+            "impact": "Significant underinvestment in highest-performing channel",
+            "channel": "Email"
+        },
+        {
+            "severity": "opportunity",
+            "finding": "Google Search: 228 leads at $316 CAC — best volume/efficiency balance",
+            "impact": "Scalable channel with proven performance at current spend levels",
+            "channel": "Google Ads"
+        }
+    ],
+    "recommended_actions": [
+        {
+            "priority": "P0",
+            "action": "Reduce Meta Ads spend by 15–20%",
+            "rationale": "Audience saturation — diminishing returns at $95K/month. Reallocate to higher-ROI channels.",
+            "projected_impact": "Save ~$15K–19K/month, minimal revenue impact (<3% loss)"
+        },
+        {
+            "priority": "P0",
+            "action": "Increase Email Marketing budget by 50% ($12K → $18K)",
+            "rationale": "5.67x ROAS is the highest across all channels — current budget is a fraction of potential.",
+            "projected_impact": "+$34K estimated additional revenue at current efficiency"
+        },
+        {
+            "priority": "P1",
+            "action": "Scale Google Search by 20% ($72K → $86K)",
+            "rationale": "Proven 2.75x ROAS with scalable intent-based audience. Most efficient high-volume channel.",
+            "projected_impact": "+45 leads/month, ~$40K incremental revenue"
+        },
+        {
+            "priority": "P1",
+            "action": "Build LinkedIn → Email retargeting nurture sequence",
+            "rationale": "LinkedIn generates high-quality enterprise leads at 2.04x ROAS but nurture path is weak.",
+            "projected_impact": "Estimated 8–12% improvement in SQL conversion rate"
+        },
+        {
+            "priority": "P2",
+            "action": "Increase Webinar frequency to 2x per month",
+            "rationale": "Webinar pipeline contribution (3x direct revenue) demonstrates strong enterprise enablement value.",
+            "projected_impact": "Pipeline growth estimated at $400K–600K over next quarter"
+        }
+    ]
+}
+
+
 @api_router.get("/recommendations")
 async def get_recommendations():
-    return {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "period": "June 2026",
-        "key_findings": [
-            {
-                "severity": "critical",
-                "finding": "ROAS declined 6 consecutive months: 2.04x → 1.82x",
-                "impact": "Revenue growth is not keeping pace with spend increases",
-                "channel": "All"
-            },
-            {
-                "severity": "opportunity",
-                "finding": "CAC improved 17% in 6 months ($600 → $499) — leads growing faster than spend",
-                "impact": "Lead generation efficiency gaining momentum — strong signal to invest further",
-                "channel": "All"
-            },
-            {
-                "severity": "high",
-                "finding": "Meta Ads: 30% of budget but worst ROAS at 1.66x — declining trend",
-                "impact": "~$28K/month in suboptimal spend vs alternative channels",
-                "channel": "Meta Ads"
-            },
-            {
-                "severity": "opportunity",
-                "finding": "Email delivers 5.67x ROAS — 3x above average — on just $12K/month",
-                "impact": "Significant underinvestment in highest-performing channel",
-                "channel": "Email"
-            },
-            {
-                "severity": "opportunity",
-                "finding": "Google Search: 228 leads at $316 CAC — best volume/efficiency balance",
-                "impact": "Scalable channel with proven performance at current spend levels",
-                "channel": "Google Ads"
-            }
-        ],
-        "recommended_actions": [
-            {
-                "priority": "P0",
-                "action": "Reduce Meta Ads spend by 15–20%",
-                "rationale": "Audience saturation — diminishing returns at $95K/month. Reallocate to higher-ROI channels.",
-                "projected_impact": "Save ~$15K–19K/month, minimal revenue impact (<3% loss)"
-            },
-            {
-                "priority": "P0",
-                "action": "Increase Email Marketing budget by 50% ($12K → $18K)",
-                "rationale": "5.67x ROAS is the highest across all channels — current budget is a fraction of potential.",
-                "projected_impact": "+$34K estimated additional revenue at current efficiency"
-            },
-            {
-                "priority": "P1",
-                "action": "Scale Google Search by 20% ($72K → $86K)",
-                "rationale": "Proven 2.75x ROAS with scalable intent-based audience. Most efficient high-volume channel.",
-                "projected_impact": "+45 leads/month, ~$40K incremental revenue"
-            },
-            {
-                "priority": "P1",
-                "action": "Build LinkedIn → Email retargeting nurture sequence",
-                "rationale": "LinkedIn generates high-quality enterprise leads at 2.04x ROAS but nurture path is weak.",
-                "projected_impact": "Estimated 8–12% improvement in SQL conversion rate"
-            },
-            {
-                "priority": "P2",
-                "action": "Increase Webinar frequency to 2x per month",
-                "rationale": "Webinar pipeline contribution (3x direct revenue) demonstrates strong enterprise enablement value.",
-                "projected_impact": "Pipeline growth estimated at $400K–600K over next quarter"
-            }
-        ]
-    }
+    api_key = os.environ.get('OPENAI_API_KEY') or os.environ.get('EMERGENT_LLM_KEY')
+    if not api_key:
+        logger.warning("No OpenAI API key found, returning fallback recommendations.")
+        res = dict(FALLBACK_RECOMMENDATIONS)
+        res["generated_at"] = datetime.now(timezone.utc).isoformat()
+        return res
+
+    try:
+        client = OpenAI(api_key=api_key)
+        
+        prompt = f"""You are an expert AI Marketing Analytics Director. Analyze the following current marketing performance data for June 2026 (TechCorp) and generate highly actionable key findings and recommended actions in JSON format.
+        
+        DATA:
+        {DEMO_DATA}
+        
+        Your response must be a valid JSON object matching the following structure:
+        {{
+          "period": "June 2026",
+          "key_findings": [
+            {{
+              "severity": "critical" | "high" | "opportunity",
+              "finding": "Specific data-driven finding description with exact metrics (e.g. 'ROAS declined 6 consecutive months: 2.04x to 1.82x')",
+              "impact": "What is the direct impact of this finding",
+              "channel": "Channel name or 'All'"
+            }}
+          ],
+          "recommended_actions": [
+            {{
+              "priority": "P0" | "P1" | "P2",
+              "action": "Clear, direct recommended action (e.g. 'Reduce Meta Ads spend by 15-20%')",
+              "rationale": "A concise reason justifying this action",
+              "projected_impact": "Estimated or projected business impact"
+            }}
+          ]
+        }}
+        
+        Rules:
+        - Identify critical issues like the 6-month ROAS downtrend.
+        - Identify opportunities like Email Ads' very high ROAS but under-allocation.
+        - Identify CAC improvements as a strong positive signal.
+        - Keep the findings and actions concise, data-driven, and highly relevant.
+        - The keys in your JSON output must exactly match the keys above.
+        """
+        
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are a data-driven Chief Growth Officer. You only respond with a raw JSON object matching the requested structure."},
+                {"role": "user", "content": prompt}
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.2
+        )
+        
+        import json
+        result = json.loads(response.choices[0].message.content)
+        result["generated_at"] = datetime.now(timezone.utc).isoformat()
+        return result
+    except Exception as e:
+        logger.error(f"Failed to generate recommendations via OpenAI SDK: {e}")
+        res = dict(FALLBACK_RECOMMENDATIONS)
+        res["generated_at"] = datetime.now(timezone.utc).isoformat()
+        return res
 
 
 app.include_router(api_router)

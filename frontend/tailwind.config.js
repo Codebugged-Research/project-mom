@@ -5,14 +5,16 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        heading: ["Outfit", "sans-serif"],
-        body: ["Manrope", "sans-serif"],
+        heading: ["Playfair Display", "serif"],
+        body: ["Space Grotesk", "Space Grotesk Fallback", "sans-serif"],
         mono: ["Space Mono", "monospace"],
+        title: ["Oswald", "sans-serif"],
+        condensed: ["Bebas Neue", "sans-serif"],
       },
       colors: {
-        neon: "#00FF9C",
-        "neon-hover": "#00CC7D",
-        surface: "#0A0D0B",
+        neon: "#FFFFFF",
+        "neon-hover": "#E5E5E5",
+        surface: "#0A0A0A",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

@@ -13,7 +13,7 @@
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 255, 156, 0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Simulator slider overrides */
@@ -27,16 +27,16 @@
   width: 18px;
   height: 18px;
   background: white;
-  border: 2px solid #00FF9C !important;
+  border: 2px solid white !important;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0, 255, 156, 0.4);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: box-shadow 0.2s;
 }
 
 .simulator-slider [role="slider"]:hover,
 .simulator-slider [role="slider"]:focus {
-  box-shadow: 0 0 16px rgba(0, 255, 156, 0.6);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
   outline: none;
 }
 
@@ -63,11 +63,11 @@
 
 /* Font application */
 .font-heading {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Playfair Display', serif;
 }
 
 .font-body {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Space Grotesk', 'Space Grotesk Fallback', sans-serif;
 }
 
 .font-mono {
