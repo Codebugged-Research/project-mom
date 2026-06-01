@@ -172,11 +172,9 @@ export default function Copilot() {
               <p className="whitespace-pre-wrap">{msg.content}</p>
             </div>
             {msg.role === "user" && (
-              <img
-                src="https://images.unsplash.com/photo-1624670319970-37aa780d4874?crop=entropy&cs=srgb&fm=jpg&w=60&q=85"
-                alt="User"
-                className="w-8 h-8 rounded-full object-cover border border-white/10 flex-shrink-0 mt-1"
-              />
+              <div className="w-8 h-8 rounded-full bg-[#00FF9C]/15 border border-[#00FF9C]/30 flex items-center justify-center flex-shrink-0 mt-1 flex-shrink-0">
+                <span className="text-xs font-bold text-[#00FF9C] font-heading">RS</span>
+              </div>
             )}
           </div>
         ))}

@@ -47,13 +47,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const KPI_CONFIG = [
-  { key: "total_spend", label: "Total Spend", icon: DollarSign, format: (v) => formatCurrency(v), change: "+$77K vs Jan", isGood: false },
-  { key: "total_revenue", label: "Revenue", icon: TrendingUp, format: (v) => formatCurrency(v), change: "+$88K vs Jan", isGood: true },
-  { key: "roas", label: "ROAS", icon: TrendingDown, format: (v) => `${v.toFixed(2)}x`, change: "-0.22x vs Jan", isGood: false },
-  { key: "cac", label: "CAC", icon: Users, format: (v) => `$${v}`, change: "+$94 vs Jan", isGood: false },
-  { key: "leads_generated", label: "Leads Generated", icon: Target, format: (v) => v.toLocaleString(), change: "+45 vs Jan", isGood: true },
-  { key: "conversion_rate", label: "Conversion Rate", icon: Percent, format: (v) => `${v}%`, change: "+0.1% vs Jan", isGood: true },
-  { key: "pipeline_contribution", label: "Pipeline", icon: Building2, format: (v) => formatCurrency(v), change: "+$250K vs Jan", isGood: true },
+  { key: "total_spend", label: "Total Spend", icon: DollarSign, format: (v) => formatCurrency(v), change: "+$77K vs Jan", isGood: false, trendDown: false },
+  { key: "total_revenue", label: "Revenue", icon: TrendingUp, format: (v) => formatCurrency(v), change: "+$88K vs Jan", isGood: true, trendDown: false },
+  { key: "roas", label: "ROAS", icon: TrendingDown, format: (v) => `${v.toFixed(2)}x`, change: "-0.22x vs Jan", isGood: false, trendDown: true },
+  { key: "cac", label: "CAC", icon: Users, format: (v) => `$${v}`, change: "-$101 vs Jan", isGood: true, trendDown: true },
+  { key: "leads_generated", label: "Leads Generated", icon: Target, format: (v) => v.toLocaleString(), change: "+233 vs Jan", isGood: true, trendDown: false },
+  { key: "conversion_rate", label: "Conversion Rate", icon: Percent, format: (v) => `${v}%`, change: "+0.1% vs Jan", isGood: true, trendDown: false },
+  { key: "pipeline_contribution", label: "Pipeline", icon: Building2, format: (v) => formatCurrency(v), change: "+$250K vs Jan", isGood: true, trendDown: false },
 ];
 
 export default function Dashboard() {
@@ -99,10 +99,10 @@ export default function Dashboard() {
                 <cfg.icon className="w-3.5 h-3.5 text-[#00FF9C]" />
               </div>
               <div className={`flex items-center gap-0.5 text-xs font-mono ${cfg.isGood ? "text-[#00FF9C]" : "text-[#FF6B6B]"}`}>
-                {cfg.isGood ? (
-                  <ArrowUpRight className="w-3 h-3" />
-                ) : (
+                {cfg.trendDown ? (
                   <ArrowDownRight className="w-3 h-3" />
+                ) : (
+                  <ArrowUpRight className="w-3 h-3" />
                 )}
                 <span>{cfg.change.split(" ")[0]}</span>
               </div>
@@ -227,16 +227,16 @@ export default function Dashboard() {
               CAC Trend
             </h3>
             <p className="text-xs text-[#8B9A92] font-body mt-0.5">
-              Cost per acquisition — rising concern
+              Cost per lead — improving efficiency
             </p>
           </div>
           <ResponsiveContainer width="100%" height={180}>
             <LineChart data={monthlyTrend} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
               <XAxis dataKey="month" tick={{ fill: "#525C57", fontSize: 11, fontFamily: "Manrope" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "#525C57", fontSize: 11, fontFamily: "Manrope" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={[350, 500]} />
+              <YAxis tick={{ fill: "#525C57", fontSize: 11, fontFamily: "Manrope" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={[460, 630]} />
               <Tooltip content={<CustomTooltip />} />
-              <Line type="monotone" dataKey="cac" name="CAC" stroke="#FF6B6B" strokeWidth={2.5} dot={{ fill: "#FF6B6B", r: 3 }} activeDot={{ r: 5 }} />
+              <Line type="monotone" dataKey="cac" name="CAC" stroke="#00FF9C" strokeWidth={2.5} dot={{ fill: "#00FF9C", r: 3 }} activeDot={{ r: 5 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>

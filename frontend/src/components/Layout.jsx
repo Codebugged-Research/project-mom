@@ -121,17 +121,15 @@ export default function Layout({ children }) {
           </div>
 
           <div className="flex items-center gap-3 mt-4">
-            <img
-              src="https://images.unsplash.com/photo-1624670319970-37aa780d4874?crop=entropy&cs=srgb&fm=jpg&w=80&q=85"
-              className="w-8 h-8 rounded-full object-cover border border-white/10"
-              alt="CMO"
-            />
+            <div className="w-8 h-8 rounded-full bg-[#00FF9C]/15 border border-[#00FF9C]/30 flex items-center justify-center flex-shrink-0">
+              <span className="text-xs font-bold text-[#00FF9C] font-heading tracking-tight">RS</span>
+            </div>
             <div>
               <div className="text-sm text-white font-medium font-body">
-                Sarah Chen
+                Rasheed Sait
               </div>
               <div className="text-xs text-[#525C57] font-body">
-                CMO, TechCorp
+                CMO, Project Worldwide
               </div>
             </div>
           </div>

@@ -38,11 +38,11 @@ DEMO_DATA = {
         "pipeline_contribution": 2850000
     },
     "monthly_trend": [
-        {"month": "Jan", "spend": 235000, "revenue": 480000, "roas": 2.04, "cac": 405, "leads": 580},  # 235000/580
-        {"month": "Feb", "spend": 248000, "revenue": 502000, "roas": 2.02, "cac": 417, "leads": 595},  # 248000/595
-        {"month": "Mar", "spend": 267000, "revenue": 535000, "roas": 2.00, "cac": 436, "leads": 612},  # 267000/612
-        {"month": "Apr", "spend": 280000, "revenue": 547000, "roas": 1.95, "cac": 468, "leads": 598},  # 280000/598
-        {"month": "May", "spend": 295000, "revenue": 558000, "roas": 1.89, "cac": 484, "leads": 610},  # 295000/610
+        {"month": "Jan", "spend": 235000, "revenue": 480000, "roas": 2.04, "cac": 600, "leads": 392},  # 235000/392
+        {"month": "Feb", "spend": 248000, "revenue": 502000, "roas": 2.02, "cac": 577, "leads": 430},  # 248000/430
+        {"month": "Mar", "spend": 267000, "revenue": 535000, "roas": 2.00, "cac": 562, "leads": 475},  # 267000/475
+        {"month": "Apr", "spend": 280000, "revenue": 547000, "roas": 1.95, "cac": 533, "leads": 525},  # 280000/525
+        {"month": "May", "spend": 295000, "revenue": 558000, "roas": 1.89, "cac": 509, "leads": 580},  # 295000/580
         {"month": "Jun", "spend": 312000, "revenue": 568000, "roas": 1.82, "cac": 499, "leads": 625}   # 312000/625
     ],
     "channels": [
@@ -72,17 +72,17 @@ OVERVIEW METRICS:
 - Total Monthly Spend: $312,000
 - Total Monthly Revenue: $568,000
 - ROAS: 1.82x (declining from 2.04x in January — 6-month downtrend)
-- Customer Acquisition Cost (CAC): $499 (up 23% from $405 in January — calculated as total_spend / leads_generated)
+- Customer Acquisition Cost (CAC): $499 (DOWN 17% from $600 in January — leads growing faster than spend — IMPROVING)
 - Monthly Leads: 625
 - Conversion Rate: 3.2%
 - Pipeline Contribution: $2.85M
 
 6-MONTH TREND (Jan→Jun 2026):
-Jan: Spend $235K | Revenue $480K | ROAS 2.04 | CAC $405 | Leads 580
-Feb: Spend $248K | Revenue $502K | ROAS 2.02 | CAC $417 | Leads 595
-Mar: Spend $267K | Revenue $535K | ROAS 2.00 | CAC $436 | Leads 612
-Apr: Spend $280K | Revenue $547K | ROAS 1.95 | CAC $468 | Leads 598
-May: Spend $295K | Revenue $558K | ROAS 1.89 | CAC $484 | Leads 610
+Jan: Spend $235K | Revenue $480K | ROAS 2.04 | CAC $600 | Leads 392
+Feb: Spend $248K | Revenue $502K | ROAS 2.02 | CAC $577 | Leads 430
+Mar: Spend $267K | Revenue $535K | ROAS 2.00 | CAC $562 | Leads 475
+Apr: Spend $280K | Revenue $547K | ROAS 1.95 | CAC $533 | Leads 525
+May: Spend $295K | Revenue $558K | ROAS 1.89 | CAC $509 | Leads 580
 Jun: Spend $312K | Revenue $568K | ROAS 1.82 | CAC $499 | Leads 625
 
 CHANNEL PERFORMANCE (Current Month):
@@ -98,7 +98,7 @@ Impressions: 4,500,000 → Clicks: 125,000 → Leads: 625 → SQLs: 280 → Oppo
 
 KEY ISSUES:
 1. ROAS declined every month for 6 straight months (2.04 → 1.82)
-2. CAC increased 23% ($405 → $499) — calculated as total_spend / leads_generated
+2. CAC improved 17% ($600 → $499) — leads growing faster than spend, positive efficiency signal
 3. Meta Ads: Highest spend ($95K, 30% of budget) but worst ROAS (1.66x) — audience saturation
 4. Email: Best ROAS (5.67x) but only $12K budget (3.8%) — massively underallocated
 5. Google Search: Best volume+efficiency balance — scalable with more budget
@@ -181,9 +181,9 @@ async def get_recommendations():
                 "channel": "All"
             },
             {
-                "severity": "critical",
-                "finding": "CAC up 23% in 6 months ($405 → $499) — total spend ÷ leads generated",
-                "impact": "Each new customer costs $75 more than at the start of the year",
+                "severity": "opportunity",
+                "finding": "CAC improved 17% in 6 months ($600 → $499) — leads growing faster than spend",
+                "impact": "Lead generation efficiency gaining momentum — strong signal to invest further",
                 "channel": "All"
             },
             {
