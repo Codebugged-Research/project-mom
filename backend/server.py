@@ -32,18 +32,18 @@ DEMO_DATA = {
         "total_spend": 312000,
         "total_revenue": 568000,
         "roas": 1.82,
-        "cac": 467,
+        "cac": 499,  # 312000 / 625 = 499.2
         "leads_generated": 625,
         "conversion_rate": 3.2,
         "pipeline_contribution": 2850000
     },
     "monthly_trend": [
-        {"month": "Jan", "spend": 235000, "revenue": 480000, "roas": 2.04, "cac": 392, "leads": 580},
-        {"month": "Feb", "spend": 248000, "revenue": 502000, "roas": 2.02, "cac": 408, "leads": 595},
-        {"month": "Mar", "spend": 267000, "revenue": 535000, "roas": 2.00, "cac": 425, "leads": 612},
-        {"month": "Apr", "spend": 280000, "revenue": 547000, "roas": 1.95, "cac": 438, "leads": 598},
-        {"month": "May", "spend": 295000, "revenue": 558000, "roas": 1.89, "cac": 452, "leads": 610},
-        {"month": "Jun", "spend": 312000, "revenue": 568000, "roas": 1.82, "cac": 467, "leads": 625}
+        {"month": "Jan", "spend": 235000, "revenue": 480000, "roas": 2.04, "cac": 405, "leads": 580},  # 235000/580
+        {"month": "Feb", "spend": 248000, "revenue": 502000, "roas": 2.02, "cac": 417, "leads": 595},  # 248000/595
+        {"month": "Mar", "spend": 267000, "revenue": 535000, "roas": 2.00, "cac": 436, "leads": 612},  # 267000/612
+        {"month": "Apr", "spend": 280000, "revenue": 547000, "roas": 1.95, "cac": 468, "leads": 598},  # 280000/598
+        {"month": "May", "spend": 295000, "revenue": 558000, "roas": 1.89, "cac": 484, "leads": 610},  # 295000/610
+        {"month": "Jun", "spend": 312000, "revenue": 568000, "roas": 1.82, "cac": 499, "leads": 625}   # 312000/625
     ],
     "channels": [
         {"channel": "Meta Ads", "spend": 95000, "revenue": 158000, "leads": 185, "cac": 514, "roas": 1.66, "status": "Declining"},
@@ -72,18 +72,18 @@ OVERVIEW METRICS:
 - Total Monthly Spend: $312,000
 - Total Monthly Revenue: $568,000
 - ROAS: 1.82x (declining from 2.04x in January — 6-month downtrend)
-- Customer Acquisition Cost (CAC): $467 (up 19% from $392 in January)
+- Customer Acquisition Cost (CAC): $499 (up 23% from $405 in January — calculated as total_spend / leads_generated)
 - Monthly Leads: 625
 - Conversion Rate: 3.2%
 - Pipeline Contribution: $2.85M
 
 6-MONTH TREND (Jan→Jun 2026):
-Jan: Spend $235K | Revenue $480K | ROAS 2.04 | CAC $392 | Leads 580
-Feb: Spend $248K | Revenue $502K | ROAS 2.02 | CAC $408 | Leads 595
-Mar: Spend $267K | Revenue $535K | ROAS 2.00 | CAC $425 | Leads 612
-Apr: Spend $280K | Revenue $547K | ROAS 1.95 | CAC $438 | Leads 598
-May: Spend $295K | Revenue $558K | ROAS 1.89 | CAC $452 | Leads 610
-Jun: Spend $312K | Revenue $568K | ROAS 1.82 | CAC $467 | Leads 625
+Jan: Spend $235K | Revenue $480K | ROAS 2.04 | CAC $405 | Leads 580
+Feb: Spend $248K | Revenue $502K | ROAS 2.02 | CAC $417 | Leads 595
+Mar: Spend $267K | Revenue $535K | ROAS 2.00 | CAC $436 | Leads 612
+Apr: Spend $280K | Revenue $547K | ROAS 1.95 | CAC $468 | Leads 598
+May: Spend $295K | Revenue $558K | ROAS 1.89 | CAC $484 | Leads 610
+Jun: Spend $312K | Revenue $568K | ROAS 1.82 | CAC $499 | Leads 625
 
 CHANNEL PERFORMANCE (Current Month):
 Meta Ads:   $95K spend | $158K revenue | 185 leads | ROAS 1.66x | CAC $514 | STATUS: DECLINING
@@ -98,7 +98,7 @@ Impressions: 4,500,000 → Clicks: 125,000 → Leads: 625 → SQLs: 280 → Oppo
 
 KEY ISSUES:
 1. ROAS declined every month for 6 straight months (2.04 → 1.82)
-2. CAC increased 19% ($392 → $467) — growing faster than revenue
+2. CAC increased 23% ($405 → $499) — calculated as total_spend / leads_generated
 3. Meta Ads: Highest spend ($95K, 30% of budget) but worst ROAS (1.66x) — audience saturation
 4. Email: Best ROAS (5.67x) but only $12K budget (3.8%) — massively underallocated
 5. Google Search: Best volume+efficiency balance — scalable with more budget
@@ -182,7 +182,7 @@ async def get_recommendations():
             },
             {
                 "severity": "critical",
-                "finding": "CAC up 19% in 6 months ($392 → $467)",
+                "finding": "CAC up 23% in 6 months ($405 → $499) — total spend ÷ leads generated",
                 "impact": "Each new customer costs $75 more than at the start of the year",
                 "channel": "All"
             },

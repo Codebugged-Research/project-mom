@@ -2,19 +2,19 @@ export const OVERVIEW = {
   total_spend: 312000,
   total_revenue: 568000,
   roas: 1.82,
-  cac: 467,
+  cac: 499, // 312000 / 625 = 499.2
   leads_generated: 625,
   conversion_rate: 3.2,
   pipeline_contribution: 2850000,
 };
 
 export const MONTHLY_TREND = [
-  { month: "Jan", spend: 235000, revenue: 480000, roas: 2.04, cac: 392, leads: 580 },
-  { month: "Feb", spend: 248000, revenue: 502000, roas: 2.02, cac: 408, leads: 595 },
-  { month: "Mar", spend: 267000, revenue: 535000, roas: 2.00, cac: 425, leads: 612 },
-  { month: "Apr", spend: 280000, revenue: 547000, roas: 1.95, cac: 438, leads: 598 },
-  { month: "May", spend: 295000, revenue: 558000, roas: 1.89, cac: 452, leads: 610 },
-  { month: "Jun", spend: 312000, revenue: 568000, roas: 1.82, cac: 467, leads: 625 },
+  { month: "Jan", spend: 235000, revenue: 480000, roas: 2.04, cac: 405, leads: 580 }, // 235000/580
+  { month: "Feb", spend: 248000, revenue: 502000, roas: 2.02, cac: 417, leads: 595 }, // 248000/595
+  { month: "Mar", spend: 267000, revenue: 535000, roas: 2.00, cac: 436, leads: 612 }, // 267000/612
+  { month: "Apr", spend: 280000, revenue: 547000, roas: 1.95, cac: 468, leads: 598 }, // 280000/598
+  { month: "May", spend: 295000, revenue: 558000, roas: 1.89, cac: 484, leads: 610 }, // 295000/610
+  { month: "Jun", spend: 312000, revenue: 568000, roas: 1.82, cac: 499, leads: 625 }, // 312000/625
 ];
 
 export const CHANNELS = [
